@@ -2,6 +2,8 @@
 
 Aplicación Flutter de hábitos y finanzas personales.
 
+**[Abrir demo en GitHub Pages](https://renzoleporace.github.io/habit-tracker-v4/)**
+
 ## Acceso de demostración
 
 Usuario: `demo` · Contraseña: `demo123`.
