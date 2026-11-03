@@ -1,8 +1,15 @@
 # Mi espacio
 
-Aplicación Flutter de hábitos y finanzas personales.
+Aplicación Flutter que reúne el seguimiento de hábitos, la planificación de la rutina y el presupuesto personal en un solo lugar.
 
 **[Abrir demo en GitHub Pages](https://renzoleporace.github.io/habit-tracker-v4/)**
+
+## Qué podés hacer
+
+- Registrar hábitos y consultar tu progreso.
+- Organizar actividades en una línea de tiempo diaria y detectar bloques repetidos y huecos en la agenda.
+- Planificar tareas semanales y reprogramarlas dentro de la misma semana.
+- Registrar ingresos y gastos por categoría y consultar el saldo del mes.
 
 ## Acceso de demostración
 
@@ -24,12 +31,15 @@ Los hábitos también se guardan localmente. Su origen actual conserva los hábi
 
 «Tareas semanales» muestra semanas de lunes a domingo. Podés crear y completar tareas, borrarlas o moverlas a otro día de la semana; al moverlas vuelven a quedar pendientes. Ambas secciones usan `RoutineRepository` y guardado local con `shared_preferences`, preparadas para un adaptador de base de datos.
 
-## Ejecutar
+## Ejecutar en local
+
+Necesitás Flutter con Dart compatible con el requisito `^3.11.5` de [`pubspec.yaml`](pubspec.yaml). Desde la raíz del repositorio, ejecutá:
 
 ```sh
 flutter pub get
 flutter run
-flutter test
 ```
+
+Para correr las pruebas, usá `flutter test`.
 
 En Windows, los plugins Flutter requieren habilitar el modo de desarrollador para la creación de enlaces simbólicos.
