@@ -1,45 +1,142 @@
+<div align="center">
+
+<img src="docs/icono.png" alt="Ícono de Mi espacio" width="96" height="96">
+
 # Mi espacio
 
-Aplicación Flutter que reúne el seguimiento de hábitos, la planificación de la rutina y el presupuesto personal en un solo lugar.
+**Hábitos, rutina diaria, tareas semanales y finanzas personales en una sola app Flutter.**
 
-**[Abrir demo en GitHub Pages](https://renzoleporace.github.io/habit-tracker-v4/)**
+![Flutter](https://img.shields.io/badge/Flutter-3.41-02569B?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.11-0175C2?logo=dart&logoColor=white)
+![Bloc](https://img.shields.io/badge/Estado-Cubit_y_ChangeNotifier-4ADE80)
+[![Análisis y pruebas](https://github.com/RenzoLeporace/habit-tracker-v4/actions/workflows/ci.yml/badge.svg)](https://github.com/RenzoLeporace/habit-tracker-v4/actions/workflows/ci.yml)
+[![Demo](https://github.com/RenzoLeporace/habit-tracker-v4/actions/workflows/pages.yml/badge.svg)](https://github.com/RenzoLeporace/habit-tracker-v4/actions/workflows/pages.yml)
+
+### [Probar la demo](https://renzoleporace.github.io/habit-tracker-v4/?demo)
+
+<img src="docs/capturas/habitos.png" alt="Panel de hábitos con indicadores, grilla del mes, rendimiento horario y progreso semanal" width="900">
+
+</div>
+
+> **In English:** A Flutter app (web, Android, iOS and desktop) that brings together habit tracking, a daily
+> routine planner, weekly tasks and a personal budget. Dark UI with a single accent color, Spanish (Argentina)
+> locale, local persistence with `shared_preferences`, demo data on first launch and 22 automated tests that
+> run on GitHub Actions before every deploy to GitHub Pages.
+
+## Índice
+
+- [Capturas](#capturas)
+- [Qué podés hacer](#qué-podés-hacer)
+- [Demo](#demo)
+- [Finanzas](#finanzas)
+- [Arquitectura](#arquitectura)
+- [Ejecutar en local](#ejecutar-en-local)
+- [Pruebas](#pruebas)
+- [Estructura del proyecto](#estructura-del-proyecto)
+
+## Capturas
+
+| Finanzas | Mi día a día |
+| --- | --- |
+| <img src="docs/capturas/finanzas.png" alt="Finanzas con indicadores, flujo de fondos y presupuesto del mes" width="440"> | <img src="docs/capturas/rutina.png" alt="Línea de tiempo del día, actividades y análisis de rutina" width="440"> |
+| **Tareas semanales** | **Inicio de sesión** |
+| <img src="docs/capturas/tareas.png" alt="Tareas de la semana en siete columnas" width="440"> | <img src="docs/capturas/login.png" alt="Pantalla de inicio de sesión con acceso a la demo" width="440"> |
 
 ## Qué podés hacer
 
-- Registrar hábitos y consultar tu progreso.
-- Organizar actividades en una línea de tiempo diaria y detectar bloques repetidos y huecos en la agenda.
-- Planificar tareas semanales y reprogramarlas dentro de la misma semana.
-- Registrar ingresos y gastos por categoría y consultar el saldo del mes.
+- **Hábitos:** registrar hábitos, marcarlos día a día con su horario y ver la racha, el progreso del mes, el
+  rendimiento por franja horaria, el progreso semanal y un mapa del mes.
+- **Mi día a día:** cargar actividades con horario y categoría en una línea de tiempo, recorrer los días y detectar
+  bloques que se repiten y huecos libres de al menos 30 minutos. El análisis es local, sin servicios externos.
+- **Tareas semanales:** crear, tachar, mover y borrar tareas en una semana de lunes a domingo; al moverlas a otro
+  día vuelven a quedar pendientes.
+- **Finanzas:** registrar, editar y borrar ingresos y gastos (con opción de deshacer), planificar el presupuesto
+  por categoría, ver los gastos por categoría y llevar el ahorro acumulado del año.
+- **Tus datos:** volver a cargar los datos de ejemplo o borrar todo y empezar de cero.
 
-## Acceso de demostración
+La interfaz se adapta a escritorio (menú lateral) y a celular (barra inferior), y usa formatos de Argentina:
+`$ 1.234,50`, fechas `dd/mm/aaaa` y calendarios en español.
 
-Usuario: `demo` · Contraseña: `demo123`.
+## Demo
 
-El acceso está implementado mediante `AuthRepository`. Para migrarlo a una base de datos o servicio de identidad, reemplazá `DemoAuthRepository` en `lib/main.dart`. Este acceso local no ofrece seguridad para datos sensibles.
+La demo se publica en GitHub Pages con cada cambio en `main`, después de pasar el análisis y las pruebas.
+
+- **[Entrar directo a la demo](https://renzoleporace.github.io/habit-tracker-v4/?demo)**, o abrir una sección
+  puntual: [Mi día a día](https://renzoleporace.github.io/habit-tracker-v4/?demo&seccion=rutina),
+  [Tareas](https://renzoleporace.github.io/habit-tracker-v4/?demo&seccion=tareas) o
+  [Finanzas](https://renzoleporace.github.io/habit-tracker-v4/?demo&seccion=finanzas).
+- Desde la pantalla de inicio de sesión, con el botón **Probar la demo** o con el usuario `demo` y la contraseña
+  `demo123`.
+
+La primera vez se cargan hábitos, actividades, tareas y movimientos de ejemplo. Todo se guarda en el navegador o
+en el dispositivo.
+
+> El acceso de demostración no protege datos: está implementado con `AuthRepository` y se reemplaza por un
+> servicio de identidad real cambiando `DemoAuthRepository` en `lib/main.dart`.
 
 ## Finanzas
 
-El tablero sigue `presupuesto_2026 (2) (2).xlsx`: el ingreso mensual suma todos los ingresos; los gastos operativos incluyen solo Servicios, Supermercado y Gastos personales; Facturas, Ahorros y Débito se descuentan por separado. El restante es ingreso menos esas cuatro salidas. Los importes planeados y el ahorro acumulado se cargan manualmente. Otras categorías, como Farmacia, aparecen en el registro pero no afectan el restante, igual que en las fórmulas del Excel.
+- El **ingreso del mes** suma todos los ingresos.
+- Los **gastos operativos** incluyen Servicios, Supermercado y Gastos personales.
+- Facturas, Ahorros y Débito se descuentan por separado.
+- El **restante** es el ingreso menos esas cuatro salidas. Otras categorías, como Farmacia, aparecen en los
+  movimientos y en los gastos por categoría, pero no afectan el restante.
+- Lo planeado por categoría y el ahorro de cada mes se cargan a mano tocando la fila.
 
-Los movimientos guardan fecha, descripción, categoría, tipo e importe. Las categorías adicionales pueden crearse desde la pantalla de finanzas. Los datos se guardan localmente con `shared_preferences` por instalación. `FinanceRepository` permite sustituir este adaptador por una implementación con base de datos sin cambiar la interfaz ni los cálculos.
+## Arquitectura
 
-Los hábitos también se guardan localmente. Su origen actual conserva los hábitos de muestra en una instalación nueva.
+```mermaid
+flowchart LR
+    UI[Pantallas] --> C[Cubit / ChangeNotifier]
+    C --> R[Repositorios]
+    R --> SP[(shared_preferences)]
+```
 
-## Rutina y tareas
-
-«Mi día a día» permite registrar actividades con fecha, horario y categoría, recorrer los días y verlas en una línea de tiempo. El análisis de rutina es local: identifica bloques que se repiten en días distintos con inicios separados por hasta 30 minutos, y muestra huecos de al menos 30 minutos del día seleccionado. No usa un servicio de IA externo.
-
-«Tareas semanales» muestra semanas de lunes a domingo. Podés crear y completar tareas, borrarlas o moverlas a otro día de la semana; al moverlas vuelven a quedar pendientes. Ambas secciones usan `RoutineRepository` y guardado local con `shared_preferences`, preparadas para un adaptador de base de datos.
+| Pieza | Responsabilidad |
+| --- | --- |
+| `HabitCubit` | Estado de los hábitos con `flutter_bloc`; las rachas se calculan en casos de uso de dominio |
+| `RoutineController`, `FinanceController` | Estado de rutina, tareas y finanzas con `ChangeNotifier` |
+| `RoutineRepository`, `FinanceRepository` | Interfaces de datos con adaptadores locales; se pueden reemplazar por una base de datos sin tocar las pantallas |
+| `DemoData` | Datos de ejemplo de la primera vez y opciones para restaurarlos o borrar todo |
+| `AppTheme`, `AppColors` | Tema oscuro con un único acento verde |
 
 ## Ejecutar en local
 
-Necesitás Flutter con Dart compatible con el requisito `^3.11.5` de [`pubspec.yaml`](pubspec.yaml). Desde la raíz del repositorio, ejecutá:
+Necesitás Flutter 3.41 (Dart 3.11). Desde la raíz del repositorio:
 
 ```sh
 flutter pub get
-flutter run
+flutter run -d chrome
 ```
 
-Para correr las pruebas, usá `flutter test`.
+También corre en Android, iOS, Windows, macOS y Linux con `flutter run`. En Windows, los plugins de Flutter
+requieren activar el modo de desarrollador para crear enlaces simbólicos.
 
-En Windows, los plugins Flutter requieren habilitar el modo de desarrollador para la creación de enlaces simbólicos.
+## Pruebas
+
+```sh
+flutter analyze
+flutter test
+```
+
+Las **22 pruebas** cubren las reglas de finanzas, el formato de importes y fechas, los datos de ejemplo, la carga
+simultánea de datos sin duplicados, las categorías propias, deshacer un borrado, el análisis de rutina, las tareas
+semanales y el diseño en celular y escritorio. GitHub Actions corre formato, análisis y pruebas en cada cambio y
+antes de publicar la demo.
+
+## Estructura del proyecto
+
+```text
+lib/
+├── core/
+│   ├── demo_data.dart      # datos de ejemplo y reinicio
+│   ├── format.dart         # importes, fechas y porcentajes en es-AR
+│   └── theme/              # colores y tema
+├── features/
+│   ├── habits/             # datos, dominio (rachas) y presentación con Cubit
+│   ├── routine/            # rutina diaria y tareas semanales
+│   └── finance/            # presupuesto y movimientos
+└── main.dart               # app, inicio de sesión y navegación
+test/                       # pruebas de lógica y de interfaz
+docs/capturas/              # capturas del README
+```

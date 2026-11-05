@@ -1,0 +1,29 @@
+# Analyzes and tests the app on every push and pull request.
+name: Análisis y pruebas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Flutter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.41.9'
+          cache: true
+      - run: flutter pub get
+      - name: Formato
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Análisis
+        run: flutter analyze
+      - name: Pruebas
+        run: flutter test

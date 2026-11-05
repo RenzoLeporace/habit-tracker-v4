@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "habit_tracker_v4" "\0"
+            VALUE "CompanyName", "Renzo Leporace" "\0"
+            VALUE "FileDescription", "Mi espacio" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "habit_tracker_v4" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "habit_tracker_v4.exe" "\0"
-            VALUE "ProductName", "habit_tracker_v4" "\0"
+            VALUE "InternalName", "mi_espacio" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Renzo Leporace. All rights reserved." "\0"
+            VALUE "OriginalFilename", "mi_espacio.exe" "\0"
+            VALUE "ProductName", "Mi espacio" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

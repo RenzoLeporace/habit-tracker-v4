@@ -2,18 +2,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:habit_tracker_v4/main.dart';
-import 'package:habit_tracker_v4/Features/finance/finance_repository.dart';
-import 'package:habit_tracker_v4/Features/routine/routine_repository.dart';
-import 'package:habit_tracker_v4/Features/routine/routine_screens.dart';
-import 'package:habit_tracker_v4/Features/Habit_tracker/presentation/habit_tracker/widgets/hourly_performance_chart.dart';
-import 'package:habit_tracker_v4/Features/Habit_tracker/data/models/habit.dart';
-import 'package:habit_tracker_v4/Features/Habit_tracker/presentation/habit_tracker/cubit/habit_cubit.dart';
-import 'package:habit_tracker_v4/Features/Habit_tracker/presentation/habit_tracker/screens/home_screen.dart';
+import 'package:mi_espacio/main.dart';
+import 'package:mi_espacio/features/habits/data/datasources/habit_local_datasource.dart';
+import 'package:mi_espacio/features/finance/finance_repository.dart';
+import 'package:mi_espacio/features/routine/routine_repository.dart';
+import 'package:mi_espacio/features/routine/routine_screens.dart';
+import 'package:mi_espacio/features/habits/presentation/widgets/hourly_performance_chart.dart';
+import 'package:mi_espacio/features/habits/data/models/habit.dart';
+import 'package:mi_espacio/features/habits/presentation/cubit/habit_cubit.dart';
+import 'package:mi_espacio/features/habits/presentation/screens/home_screen.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  setUp(() => SharedPreferences.setMockInitialValues({}));
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+    HabitLocalDataSource.reiniciarCache();
+  });
 
   test('finance follows the workbook allocation rules', () async {
     final c = FinanceController(LocalFinanceRepository());
@@ -170,9 +174,14 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(MaterialApp(home: BlocProvider(
-      create: (_) => HabitCubit(), child: const HomeScreen(),
-    )));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider(
+          create: (_) => HabitCubit(),
+          child: const HomeScreen(),
+        ),
+      ),
+    );
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
     final hourly = tester.getTopLeft(find.text('RENDIMIENTO HORARIO'));
